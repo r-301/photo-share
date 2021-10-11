@@ -2,9 +2,9 @@
     <tr>
       <td>検索場所：</td><td><input type="text" id="addressInput" value="上籠谷" style="width: 200px"></td>
     </tr>
-    <tr>
-      <td>KeyWord：</td><td><input type="text" id="keywordInput" value="寿司" style="width: 200px"></td>
-    </tr>
+    <!--<tr>
+      <td>KeyWord：</td><td><input type="text" id="keywordInput" value="景勝地" style="width: 200px"></td>
+    </tr>-->
     <tr>
       <td>検索範囲：</td>
       <td>
@@ -101,22 +101,27 @@
       var service = new google.maps.places.PlacesService(map);
       
       //入力したKeywordを取得
-      var keywordInput = document.getElementById("keywordInput").value;
+      //var keywordInput = document.getElementById("keywordInput").value;
       //入力した検索範囲を取得
       var obj = document.getElementById("radiusInput");
       var radiusInput = Number(obj.options[obj.selectedIndex].value);
       
       //周辺検索
       //ここをループさせ、データを他の場所に格納。最後にデータをマップに反映させることで複数個の検索が行えるのでは
-      service.nearbySearch(
-        {
-          location: latLng,
-          radius: radiusInput,
-          keyword: keywordInput ,
-          language: 'ja'
-        },
-        displayResults
-      );
+      l=["景勝地","庭園","バード ウォッチング エリア","国立保護区","バラ園","イチゴ農園","記念公園"]
+      for (i=0;i<l.length;i++){
+        setTimeout(
+        service.nearbySearch(
+          {
+            location: latLng,
+            radius: radiusInput,
+            keyword: l[i] ,
+            language: 'ja'
+          },
+          displayResults
+        ),10000);
+      }
+        
       
       //検索範囲の円を描く
       var circle = new google.maps.Circle(
@@ -147,7 +152,7 @@
       
         //検索結果をplacesList配列に連結
         placesList = placesList.concat(results);
-        
+        console.log(placesList)
         //pagination.hasNextPage==trueの場合、
         //続きの検索結果あり
         if (pagination.hasNextPage) {
@@ -155,7 +160,7 @@
           //pagination.nextPageで次の検索結果を表示する
           //※連続実行すると取得に失敗するので、
           //  1秒くらい間隔をおく
-          setTimeout(pagination.nextPage(), 1000);
+          setTimeout(pagination.nextPage(), 10000);
         
         //pagination.hasNextPage==falseになったら
         //全ての情報が取得できているので、
@@ -214,20 +219,22 @@
       } else {
         //エラー表示
         var results = document.getElementById("results");
-        if(status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-          results.innerHTML = "検索結果が0件です。";
-        } else if(status == google.maps.places.PlacesServiceStatus.ERROR) {
-          results.innerHTML = "サーバ接続に失敗しました。";
-        } else if(status == google.maps.places.PlacesServiceStatus.INVALID_REQUEST) {
-          results.innerHTML = "リクエストが無効でした。";
-        } else if(status == google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {
-          results.innerHTML = "リクエストの利用制限回数を超えました。";
-        } else if(status == google.maps.places.PlacesServiceStatus.REQUEST_DENIED) {
-          results.innerHTML = "サービスが使えない状態でした。";
-        } else if(status == google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
-          results.innerHTML = "原因不明のエラーが発生しました。";
+        //placesListに何も格納されていない時にエラーを返す
+        if(!placesList.length){
+            if(status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
+              results.innerHTML = "検索結果が0件です。";
+            } else if(status == google.maps.places.PlacesServiceStatus.ERROR) {
+              results.innerHTML = "サーバ接続に失敗しました。";
+            } else if(status == google.maps.places.PlacesServiceStatus.INVALID_REQUEST) {
+              results.innerHTML = "リクエストが無効でした。";
+            } else if(status == google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {
+              results.innerHTML = "リクエストの利用制限回数を超えました。";
+            } else if(status == google.maps.places.PlacesServiceStatus.REQUEST_DENIED) {
+              results.innerHTML = "サービスが使えない状態でした。";
+            } else if(status == google.maps.places.PlacesServiceStatus.UNKNOWN_ERROR) {
+              results.innerHTML = "原因不明のエラーが発生しました。";
+            }
         }
-    
       }
     }
     
