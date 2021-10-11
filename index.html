@@ -219,7 +219,7 @@
       } else {
         //エラー表示
         var results = document.getElementById("results");
-        //placesListに何も格納されていない時にエラーを返す
+        //placesListに何も格納されていない時にエラーを返す　
         if(!placesList.length){
             if(status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
               results.innerHTML = "検索結果が0件です。";
