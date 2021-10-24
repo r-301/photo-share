@@ -1,6 +1,5 @@
-
+//placlesList配列を定義
 var placesList;    
-
     /*
      地図の初期表示
     */
