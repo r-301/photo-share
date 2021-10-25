@@ -202,6 +202,7 @@ var placesList;
       }
     }
     
+    
     /*
      マーカー表示
       name : 名称
