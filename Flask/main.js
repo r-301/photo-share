@@ -85,7 +85,6 @@ var placesList;
           displayResults
         ),30000);
       }
-        
       
       //検索範囲の円を描く
       var circle = new google.maps.Circle(
