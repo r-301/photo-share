@@ -10,7 +10,6 @@ var placesList;
         mapTypeId: google.maps.MapTypeId.ROADMAP
       });
     }
-    
     /*
      情報取得
     */
