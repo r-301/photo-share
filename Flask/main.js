@@ -69,6 +69,7 @@ var placesList;
       var obj = document.getElementById("radiusInput");
       var radiusInput = Number(obj.options[obj.selectedIndex].value);
       
+      
       //周辺検索
       keyword=["景勝地","庭園","バード ウォッチング エリア","国立保護区","バラ園","イチゴ農園","記念公園","史跡","日帰り温泉",
          "馬のレンタルサービス","ゴーストタウン"]
