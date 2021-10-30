@@ -62,6 +62,7 @@ var placesList;
         }
       );
       
+      
       //PlacesServiceインスタンス生成
       var service = new google.maps.places.PlacesService(map);
       
